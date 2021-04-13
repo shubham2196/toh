@@ -1,0 +1,14 @@
+.disk {
+  background-color: aquamarine;
+}
+
+.disk-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+}

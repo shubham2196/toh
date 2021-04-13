@@ -4,13 +4,21 @@ import _ from "lodash";
 
 class App extends React.Component {
   state = {
-    a: [10, 9, 8, 7],
+    a: [10, 9, 8, 7,12],
     b: [],
     c: [],
     clicked: false,
     clickTrack: {},
     steps: 0,
   };
+
+  componentDidMount() {
+    const { a, b, c } = this.state;
+    a.sort((i1, i2) => i2 - i1);
+    b.sort((i1, i2) => i2 - i1);
+    c.sort((i1, i2) => i2 - i1);
+    this.setState({a,b,c})
+  }
 
   itemClick = (val, container) => {
     console.log("container", container);
@@ -36,9 +44,12 @@ class App extends React.Component {
       if (val > min) {
         alert("not able to drop");
       } else {
+        let flag = false;
         const arr = this.state[prevContainer];
         const removed = _.remove(arr, (n) => {
-          return n == val;
+          if (n == val && !flag) flag = true;
+          else flag = false;
+          return flag;
         });
 
         this.setState({
@@ -65,10 +76,10 @@ class App extends React.Component {
           >
             <strong>A</strong>
             <div className="d-flex flex-wrap">
-              {a.map((val) => {
+              {a.map((val,index) => {
                 return (
                   <div
-                    key={val}
+                    key={index}
                     onClick={(e) => {
                       e.stopPropagation();
                       this.itemClick(val, "a");
@@ -90,10 +101,10 @@ class App extends React.Component {
           >
             <strong>B</strong>
             <div className="d-flex flex-wrap">
-              {b.map((val) => {
+              {b.map((val,index) => {
                 return (
                   <div
-                    key={val}
+                    key={index}
                     onClick={(e) => {
                       e.stopPropagation();
                       this.itemClick(val, "b");
@@ -115,10 +126,10 @@ class App extends React.Component {
           >
             <strong>C</strong>
             <div className="d-flex flex-wrap">
-              {c.map((val) => {
+              {c.map((val,index) => {
                 return (
                   <div
-                    key={val}
+                    key={index}
                     onClick={(e) => {
                       e.stopPropagation();
                       this.itemClick(val, "c");
@@ -132,7 +143,7 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-            <strong>Steps : {this.state.steps}</strong>
+        <strong>Steps : {this.state.steps}</strong>
       </div>
     );
   }
